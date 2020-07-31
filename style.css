@@ -1,0 +1,17 @@
+p {
+    font-size: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#header {
+    height: 20px;
+    width: 100%;
+}
+
+#main-content {
+    position: relative;
+}
+
+#logo {
+    width: 100px;
+}
