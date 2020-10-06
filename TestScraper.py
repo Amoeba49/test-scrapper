@@ -174,36 +174,43 @@ def find_events(searchDivision='C'):
                             else:
                                 year_competitions.append(year + competition)
                                 rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
                                 test_num += 1
                         else:  
-                            if(len(name.split('_')) > 1):
+                            if('_' in name):
                                 name = name.split('_')
-                                event = name[0] + ' Flagged'
-                                competition = name[3]
-                                year = name[2]
-                                year_competitions.append(year + competition)
-                                rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                test_num += 1
-                            elif(len(name.split('_')) == 2):
-                                name = name.split('_')
-                                event = name[0]
-                                competition = 'Nationals'
-                                year = name[1] + ' Flagged'
-                                year_competitions.append(year + competition)
-                                rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                test_num += 1
+                                if(len(name) > 2):
+                                    event = name[0] + ' Flagged'
+                                    competition = name[2]
+                                    year = name[1]
+                                    year_competitions.append(year + competition)
+                                    rows.append((event, year, competition))
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
+                                elif(len(name) == 2):
+                                    event = name[0]
+                                    competition = 'Nationals'
+                                    year = name[1] + ' Flagged'
+                                    year_competitions.append(year + competition)
+                                    rows.append((event, year, competition))
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
+                                else:
+                                    event = '' 
+                                    competition = name
+                                    year = 'Flagged'
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
                             else:
                                 event = '' 
                                 competition = name
                                 year = 'Flagged'
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
                                 test_num += 1
                     else:    
                         if(len(name.split(' - ')) > 2):
@@ -216,39 +223,54 @@ def find_events(searchDivision='C'):
                             if(not(year + competition) in year_competitions):
                                 year_competitions.append(year + competition)
                                 rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
                                 test_num += 1
-                        else:
-                            if(len(name.split('_')) > 3):
+                        else:  
+                            if('_' in name):
                                 name = name.split('_')
-                                event = name[0] + ' Flagged'
-                                competition = name[3]
-                                year = name[2]
-                                year_competitions.append(year + competition)
-                                rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                test_num += 1
-                            elif(len(name.split('_')) == 2):
-                                name = name.split('_')
-                                event = name[0]
-                                competition = 'Nationals'
-                                year = name[1] + ' Flagged'
-                                year_competitions.append(year + competition)
-                                rows.append((event, year, competition))
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                test_num += 1
+                                if((name[0] == 'Anatomy' or name[0] == 'DiseaseDetectives') and len(name) > 3):
+                                    event = name[0] + ' Flagged'
+                                    competition = name[3]
+                                    year = name[2]
+                                    year_competitions.append(year + competition)
+                                    rows.append((event, year, competition))
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
+                                elif(len(name) > 2):
+                                    event = name[0] + ' Flagged'
+                                    competition = name[2]
+                                    year = name[1]
+                                    year_competitions.append(year + competition)
+                                    rows.append((event, year, competition))
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
+                                elif(len(name) == 2):
+                                    event = name[0]
+                                    competition = 'Nationals'
+                                    year = name[1] + ' Flagged'
+                                    year_competitions.append(year + competition)
+                                    rows.append((event, year, competition))
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
+                                else:
+                                    event = '' 
+                                    competition = name
+                                    year = 'Flagged'
+                                    print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                    test_num += 1
                             else:
                                 event = '' 
                                 competition = name
                                 year = 'Flagged'
-                                print(f"INSERT INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
-                                add_sql(f"INSERT INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                print(f"INSERT IGNORE INTO Tests ('Division', 'TestEvent', 'TestYear', 'Competition', 'TestStatus', 'Students')\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
+                                add_sql(f"INSERT IGNORE INTO Tests (Division, TestEvent, TestYear, Competition, TestStatus, Students)\nVALUES ('{division}', '{event}', '{year}', '{competition}', '0', NULL);\n\n")
                                 test_num += 1
                 add_sql('/* Total number of tests: ' + str(test_num) + ' */\n')
-        add_sql("DELETE FROM Tests\nWHERE Testid IN (SELECT * \n    FROM (SELECT Testid FROM Tests\n        GROUP BY `Division`, `TestEvent`, `TestYear`, `Competition` HAVING (COUNT(*) > 1) \n        ) AS A\n    )")
 
 
 def add_sql(sql):
@@ -262,7 +284,5 @@ def add_sql(sql):
 
 if __name__ == '__main__':
     print('Starting new search')
-    find_events('B')
-
-'INSERT INTO Tests (Division, Event, Year, Competition, Status, Students)'
-'VALUES (division, Event, Year, Competition, FALSE, NULL)'
+    #find_events('B')
+    find_events()
